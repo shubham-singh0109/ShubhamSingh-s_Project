@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSH HoneyPot</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1e1e1e; /* Dark background color */
+            color: #fff; /* White text color */
+            margin: 20px;
+        }
+
+        h1, h2 {
+            color: #61dafb; /* Light blue heading color */
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #real-time-logs {
+            border: 1px solid #61dafb; /* Light blue border */
+            padding: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+            background-color: #002b36; /* Dark terminal-like background color */
+            margin-top: 20px;
+            color: #00ff00; /* Green text color for logs */
+        }
+
+        #real-time-logs li {
+            list-style-type: none;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>SSH HoneyPot</h1>
+
+    <form action="/simulate-connection" method="post">
+        <button type="submit">Simulate Connection</button>
+    </form>
+
+    <h2>Real-time Logs</h2>
+    <ul id="real-time-logs">
+        <!-- Display real-time logs here -->
+    </ul>
+
+    <button onclick="updateRealTimeLogs()">Get Real-time Logs</button>
+
+    <div>
+        <h2>What is SSH HoneyPot?</h2>
+        <p>SSH HoneyPot is a security mechanism designed to emulate an SSH server, attracting potential attackers and logging their activities. It acts as a decoy, diverting attention away from actual systems and allowing administrators to study and analyze malicious behavior.</p>
+
+        <h2>Why SSH HoneyPot is Useful?</h2>
+        <p>SSH HoneyPot serves several purposes in cybersecurity, including:</p>
+        <ul>
+            <li><b>Detection:</b> Identifying and monitoring potential threats and attack patterns.</li>
+            <li><b>Analysis:</b> Studying attacker behavior and understanding emerging threats.</li>
+            <li><b>Security:</b> Enhancing overall network security by diverting and mitigating potential attacks.</li>
+        </ul>
+
+        <h2>Where SSH HoneyPot is Used?</h2>
+        <p>SSH HoneyPots are commonly deployed in environments such as:</p>
+        <ul>
+            <li><b>Enterprise Networks:</b> To safeguard critical infrastructure and sensitive data.</li>
+            <li><b>Research Environments:</b> For studying cyber threats and developing countermeasures.</li>
+            <li><b>Public-Facing Systems:</b> To protect servers and services exposed to the internet.</li>
+        </ul>
+    </div>
+
+    <script>
+        // Function to update real-time logs dynamically
+        function updateRealTimeLogs() {
+            fetch('/get-real-time-logs')
+                .then(response => response.json())
+                .then(data => {
+                    const logsContainer = document.getElementById('real-time-logs');
+                    logsContainer.innerHTML = '';  // Clear existing logs
+
+                    data.forEach(log => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = log;
+                        logsContainer.appendChild(listItem);
+                    });
+                });
+        }
+
+        // Update logs every 2 seconds (adjust as needed)
+        setInterval(updateRealTimeLogs, 2000);
+    </script>
+</body>
+</html>
